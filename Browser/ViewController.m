@@ -53,7 +53,7 @@ typedef struct _Input
     
 	
 	self.webview = [[UIWebView alloc] initWithFrame: self.webViewContainer.bounds];
-	[self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8080"]]];
+	[self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://google.com"]]];
     self.webview.delegate = self;
 	
     [self.view addSubview:cursorView];
@@ -211,8 +211,12 @@ typedef struct _Input
     
 }
 
-
 #pragma mark - UIWebViewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [webView stringByEvaluatingJavaScriptFromString:@"function SetTextToTextFiled(id, text) {document.getElementById(id).value = text;}"];
+    [webView stringByEvaluatingJavaScriptFromString:@"function WasClicked(e) {var myAppName = 'jsToObjs'; var myActionType = 'inputDidFocus'; var myActionParameters = { 'id': e.id, 'text': e.value, 'backAction': 'SetTextToTextFiled' }; var jsonString = (JSON.stringify(myActionParameters)); var escapedJsonParameters = escape(jsonString); var url = myAppName + '://' + myActionType + '#' + escapedJsonParameters; console.log(url); document.location.href = url; }; var a = document.getElementsByTagName('input'); for (var i=0; i<a.length; i++) { a[i].addEventListener('click', function(e){WasClicked(e.target)}, false)}"];
+}
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
 
