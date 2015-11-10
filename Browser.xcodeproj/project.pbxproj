@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3AEF5B7F1BCBCC7400891762 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AEF5B7E1BCBCC7400891762 /* UIKit.framework */; };
+		A5C77E081BF1EAE800B2F010 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5C77E071BF1EAE800B2F010 /* Storyboard.storyboard */; };
 		B002B8671BAE420500C744AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B002B8661BAE420500C744AF /* main.m */; };
 		B002B86A1BAE420500C744AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B002B8691BAE420500C744AF /* AppDelegate.m */; };
 		B002B86D1BAE420500C744AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002B86C1BAE420500C744AF /* ViewController.m */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		3AEF5B7E1BCBCC7400891762 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A5C77E071BF1EAE800B2F010 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B002B8621BAE420500C744AF /* Browser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Browser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B002B8661BAE420500C744AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B002B8681BAE420500C744AF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				B002B86B1BAE420500C744AF /* ViewController.h */,
 				B002B86C1BAE420500C744AF /* ViewController.m */,
 				B002B8651BAE420500C744AF /* Supporting Files */,
+				A5C77E071BF1EAE800B2F010 /* Storyboard.storyboard */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				B002B8721BAE420500C744AF /* Assets.xcassets in Resources */,
 				B002B8701BAE420500C744AF /* Main.storyboard in Resources */,
+				A5C77E081BF1EAE800B2F010 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

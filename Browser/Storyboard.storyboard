@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="ULI-b1-S9C">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="F8x-Ng-UAF">
+            <objects>
+                <viewController id="ULI-b1-S9C" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="o0A-qg-uB2"/>
+                        <viewControllerLayoutGuide type="bottom" id="ka0-js-dpk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BtE-al-7l7">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCm-Mu-khm" userLabel="webViewContainer">
+                                <rect key="frame" x="20" y="0.0" width="1880" height="1080"/>
+                                <animations/>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="asw-0l-ia1">
+                                <rect key="frame" x="0.0" y="1080" width="1920" height="66"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="hCm-Mu-khm" secondAttribute="bottom" id="3do-fQ-Urk"/>
+                            <constraint firstItem="hCm-Mu-khm" firstAttribute="leading" secondItem="BtE-al-7l7" secondAttribute="leadingMargin" id="Cpx-TM-qSk"/>
+                            <constraint firstAttribute="bottom" secondItem="asw-0l-ia1" secondAttribute="bottom" constant="-66" id="QBG-FG-2CY"/>
+                            <constraint firstAttribute="trailing" secondItem="asw-0l-ia1" secondAttribute="trailing" id="Vfj-d3-FPs"/>
+                            <constraint firstItem="asw-0l-ia1" firstAttribute="leading" secondItem="BtE-al-7l7" secondAttribute="leading" id="gEp-ZO-kkE"/>
+                            <constraint firstItem="hCm-Mu-khm" firstAttribute="top" secondItem="o0A-qg-uB2" secondAttribute="bottom" id="lgq-xV-IPe"/>
+                            <constraint firstItem="hCm-Mu-khm" firstAttribute="trailing" secondItem="BtE-al-7l7" secondAttribute="trailingMargin" id="s6L-hk-7Hi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dummmyTextField" destination="asw-0l-ia1" id="HM7-62-oYh"/>
+                        <outlet property="webViewContainer" destination="hCm-Mu-khm" id="LdV-BI-VtI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hbG-fB-M1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="416" y="338"/>
+        </scene>
+    </scenes>
+</document>

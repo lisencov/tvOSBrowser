@@ -17,11 +17,12 @@ typedef struct _Input
 } Input;
 
 
-@interface ViewController ()
+@interface ViewController () <UIWebViewDelegate>
 {
     UIImageView *cursorView;
     Input input;
 	NSString *temporaryURL;
+    
 }
 
 @property UIWebView *webview;
@@ -30,6 +31,12 @@ typedef struct _Input
 @property BOOL cursorMode;
 @property CGPoint lastTouchLocation;
 
+@property (strong, nonatomic) NSDictionary *currentObjectAction;
+
+@property (weak, nonatomic) IBOutlet UIView* webViewContainer;
+@property (weak, nonatomic) IBOutlet UITextField *dummmyTextField;
+
+
 
 @end
 
@@ -37,7 +44,7 @@ typedef struct _Input
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+    
 	cursorView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
 	cursorView.center = CGPointMake(CGRectGetMidX([UIScreen mainScreen].bounds), CGRectGetMidY([UIScreen mainScreen].bounds));
     cursorView.image = [UIImage imageNamed:@"Cursor"];
@@ -45,16 +52,24 @@ typedef struct _Input
 	cursorView.hidden = YES;
     
 	
-	self.webview = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	[self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.apple.com"]]];
+	self.webview = [[UIWebView alloc] initWithFrame: self.webViewContainer.bounds];
+	[self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8080"]]];
+    self.webview.delegate = self;
 	
-	[self.view addSubview:self.webview];
-	[self.view addSubview:cursorView];
+    [self.view addSubview:cursorView];
+	[self.webViewContainer addSubview:self.webview];
 	
+    /*
+    [self.view addConstraint: [NSLayoutConstraint constraintWithItem:self.webview attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.webViewContainer attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.]];
+    //[self.view addConstraint: [NSLayoutConstraint constraintWithItem:self.webview attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.webViewContainer attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.]];
+    [self.view addConstraint: [NSLayoutConstraint constraintWithItem:self.webview attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.webViewContainer attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.]];
+    [self.view addConstraint: [NSLayoutConstraint constraintWithItem:self.webview attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.webViewContainer attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.]];*/
+    
+    [self.dummmyTextField addTarget:self action:@selector(dummyTextFieldDidEndEditing) forControlEvents:UIControlEventEditingDidEnd];
+    
 
 	self.webview.scrollView.bounces = YES;
 	self.webview.scrollView.panGestureRecognizer.allowedTouchTypes = @[ @(UITouchTypeIndirect) ];
-	
 }
 
 -(void)toggleMode
@@ -196,6 +211,49 @@ typedef struct _Input
     
 }
 
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+
+    NSString *myAppScheme = @"jstoobjs";
+    NSString *myActionType = @"inputDidFocus";
+    
+    if (![request.URL.scheme isEqualToString:myAppScheme]) {
+        return YES;
+    }
+    
+    // get the action from the path
+    NSString *actionType = request.URL.host;
+    // deserialize the request JSON
+    NSString *jsonDictString = [request.URL.fragment stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
+    // look at the actionType and do whatever you want here
+    if ([actionType isEqualToString:myActionType]) {
+        NSError *error;
+        NSData *data = [jsonDictString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        self.currentObjectAction = object;
+        // do something in response to your javascript action
+        // if you used an action parameters dict, deserialize and inspect it here
+        
+        self.dummmyTextField.enabled = YES;
+        self.dummmyTextField.text = self.currentObjectAction[@"text"];
+        [self.dummmyTextField becomeFirstResponder];
+
+    }
+
+    
+    return NO;
+}
+
+- (void)dummyTextFieldDidEndEditing {
+    NSString *js = [NSString stringWithFormat:@"%@('%@', '%@')", self.currentObjectAction[@"backAction"], self.currentObjectAction[@"id"], self.dummmyTextField.text];
+    NSLog(@"%@", js);
+    [self.webview stringByEvaluatingJavaScriptFromString:js];
+    self.dummmyTextField.text = nil;
+    self.dummmyTextField.enabled = NO;
+}
 
 
 @end
